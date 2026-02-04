@@ -31,13 +31,23 @@ Deno.serve(async (req) => {
     });
 
     if (createError) {
-      // If user already exists, try to get them
+      // If user already exists, update their password
       if (createError.message.includes("already been registered")) {
         const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers();
         const existingUser = existingUsers?.users?.find(u => u.email === email);
         
         if (existingUser) {
-          // Assign admin role
+          // Update password
+          const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+            existingUser.id,
+            { password }
+          );
+
+          if (updateError) {
+            throw updateError;
+          }
+
+          // Ensure admin role
           const { error: roleError } = await supabaseAdmin
             .from("user_roles")
             .upsert({ user_id: existingUser.id, role: "admin" }, { onConflict: "user_id,role" });
@@ -47,7 +57,7 @@ Deno.serve(async (req) => {
           }
 
           return new Response(
-            JSON.stringify({ success: true, message: "Admin role assigned to existing user", userId: existingUser.id }),
+            JSON.stringify({ success: true, message: "Admin password updated successfully", userId: existingUser.id }),
             { headers: { ...corsHeaders, "Content-Type": "application/json" } }
           );
         }
