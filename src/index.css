@@ -7,12 +7,36 @@
    Modern, clean, premium aesthetic
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* Palette overrides (canonical brand) */
+:root {
+  --bg-brand: #050816;
+  --brand-cyan: #00F5FF;
+  --brand-purple: #7B61FF;
+  --brand-blue: #0066FF;
+  --brand-green: #00FF99;
+  --brand-pink: #FF3CAC;
+}
+
+body {
+  cursor: none;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+@media (pointer: coarse) {
+  body { cursor: auto; }
+}
+h1, h2, h3, h4, h5, .font-display {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+.font-mono, code, pre {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
 
 @layer base {
   :root {
     /* Core backgrounds - Deep dark */
-    --background: 222 47% 4%;
+    --background: 230 60% 5%;
     --foreground: 210 40% 98%;
 
     /* Card surfaces with slight elevation */

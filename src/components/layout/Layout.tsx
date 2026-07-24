@@ -10,7 +10,7 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen flex flex-col bg-background noise-bg">
+    <div className="min-h-screen flex flex-col relative">
       <Navbar />
       <motion.main
         initial="initial"
